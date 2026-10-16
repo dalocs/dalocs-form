@@ -157,6 +157,12 @@
       font-weight: bold;
       cursor: pointer;
     }
+    #status-message {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -174,21 +180,23 @@
     4 pcs: ₱10 off | 8 pcs: ₱20 off | 12 pcs: ₱30 off</p>
   </div>
 
+  <!-- Form configured with Formspree Endpoint -->
   <form id="orderForm" action="https://formspree.io/f/mgaornrn" method="POST">
+    
     <!-- 01 Customer Details -->
     <div class="section">
       <div class="section-title">01 · Customer Details</div>
       <div class="form-group">
         <label>Full name *</label>
-        <input type="text" id="fullName" required placeholder="Enter full name">
+        <input type="text" name="fullName" required placeholder="Enter full name">
       </div>
       <div class="form-group">
         <label>Contact number *</label>
-        <input type="text" id="contact" required placeholder="Enter phone number">
+        <input type="text" name="contactNumber" required placeholder="Enter phone number">
       </div>
       <div class="form-group">
         <label>Instagram username (optional)</label>
-        <input type="text" id="ig" placeholder="e.g. username.est">
+        <input type="text" name="instagram" placeholder="e.g. username.est">
       </div>
     </div>
 
@@ -205,6 +213,7 @@
         <div class="counter">
           <button type="button" class="btn-counter" onclick="updateQty('og', -1)">-</button>
           <span id="qty-og" class="qty-display">0</span>
+          <input type="hidden" name="OG_Classic" id="input-qty-og" value="0">
           <button type="button" class="btn-counter" onclick="updateQty('og', 1)">+</button>
         </div>
       </div>
@@ -217,6 +226,7 @@
         <div class="counter">
           <button type="button" class="btn-counter" onclick="updateQty('dark', -1)">-</button>
           <span id="qty-dark" class="qty-display">0</span>
+          <input type="hidden" name="Dark_Knight" id="input-qty-dark" value="0">
           <button type="button" class="btn-counter" onclick="updateQty('dark', 1)">+</button>
         </div>
       </div>
@@ -229,6 +239,7 @@
         <div class="counter">
           <button type="button" class="btn-counter" onclick="updateQty('double', -1)">-</button>
           <span id="qty-double" class="qty-display">0</span>
+          <input type="hidden" name="Double_Trouble" id="input-qty-double" value="0">
           <button type="button" class="btn-counter" onclick="updateQty('double', 1)">+</button>
         </div>
       </div>
@@ -242,6 +253,7 @@
         <div class="counter">
           <button type="button" class="btn-counter" onclick="updateQty('redv', -1)">-</button>
           <span id="qty-redv" class="qty-display">0</span>
+          <input type="hidden" name="Red_V" id="input-qty-redv" value="0">
           <button type="button" class="btn-counter" onclick="updateQty('redv', 1)">+</button>
         </div>
       </div>
@@ -254,6 +266,7 @@
         <div class="counter">
           <button type="button" class="btn-counter" onclick="updateQty('matcha', -1)">-</button>
           <span id="qty-matcha" class="qty-display">0</span>
+          <input type="hidden" name="Matcha_Gotcha" id="input-qty-matcha" value="0">
           <button type="button" class="btn-counter" onclick="updateQty('matcha', 1)">+</button>
         </div>
       </div>
@@ -267,6 +280,7 @@
         <div class="counter">
           <button type="button" class="btn-counter" onclick="updateQty('oatmeal', -1)">-</button>
           <span id="qty-oatmeal" class="qty-display">0</span>
+          <input type="hidden" name="Oatmeal" id="input-qty-oatmeal" value="0">
           <button type="button" class="btn-counter" onclick="updateQty('oatmeal', 1)">+</button>
         </div>
       </div>
@@ -279,6 +293,7 @@
         <div class="counter">
           <button type="button" class="btn-counter" onclick="updateQty('hershey', -1)">-</button>
           <span id="qty-hershey" class="qty-display">0</span>
+          <input type="hidden" name="Hershey" id="input-qty-hershey" value="0">
           <button type="button" class="btn-counter" onclick="updateQty('hershey', 1)">+</button>
         </div>
       </div>
@@ -291,16 +306,24 @@
         <div class="counter">
           <button type="button" class="btn-counter" onclick="updateQty('biscoff', -1)">-</button>
           <span id="qty-biscoff" class="qty-display">0</span>
+          <input type="hidden" name="Biscoff" id="input-qty-biscoff" value="0">
           <button type="button" class="btn-counter" onclick="updateQty('biscoff', 1)">+</button>
         </div>
       </div>
 
-      <!-- Live Order Calculations -->
+      <!-- Live Order Calculations & Hidden Fields for Summary -->
       <div style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 12px;">
         <div class="summary-row"><span>Total quantity</span><span id="total-qty">0 pcs</span></div>
+        <input type="hidden" name="Total_Quantity" id="input-total-qty" value="0 pcs">
+
         <div class="summary-row"><span>Subtotal</span><span id="subtotal">₱0.00</span></div>
+        <input type="hidden" name="Subtotal" id="input-subtotal" value="₱0.00">
+
         <div class="summary-row discount-row"><span>Discount</span><span id="discount">-₱0.00</span></div>
+        <input type="hidden" name="Discount" id="input-discount" value="-₱0.00">
+
         <div class="summary-row total-row"><span>Total</span><span id="total">₱0.00</span></div>
+        <input type="hidden" name="Grand_Total" id="input-total" value="₱0.00">
       </div>
     </div>
 
@@ -309,30 +332,30 @@
       <div class="section-title">03 · Preferred Schedule</div>
       <div class="form-group">
         <label>Preferred pick-up / delivery date</label>
-        <input type="date" required>
+        <input type="date" name="deliveryDate" required>
       </div>
       <div class="form-group">
         <label>Preferred time</label>
         <div class="radio-group">
-          <label class="radio-label"><input type="radio" name="time" value="Morning"> Morning</label>
-          <label class="radio-label"><input type="radio" name="time" value="Afternoon" checked> Afternoon</label>
-          <label class="radio-label"><input type="radio" name="time" value="Evening"> Evening</label>
+          <label class="radio-label"><input type="radio" name="preferredTime" value="Morning"> Morning</label>
+          <label class="radio-label"><input type="radio" name="preferredTime" value="Afternoon" checked> Afternoon</label>
+          <label class="radio-label"><input type="radio" name="preferredTime" value="Evening"> Evening</label>
         </div>
       </div>
       <div class="form-group">
         <label>Fulfillment method</label>
         <div class="radio-group">
-          <label class="radio-label"><input type="radio" name="method" value="Pick-up"> Pick-up — Every Tuesday, Jaro, Iloilo</label>
-          <label class="radio-label"><input type="radio" name="method" value="Delivery" checked> Delivery — via Maxim, fee c/o buyer</label>
+          <label class="radio-label"><input type="radio" name="fulfillmentMethod" value="Pick-up"> Pick-up — Every Tuesday, Jaro, Iloilo</label>
+          <label class="radio-label"><input type="radio" name="fulfillmentMethod" value="Delivery" checked> Delivery — via Maxim, fee c/o buyer</label>
         </div>
       </div>
       <div class="form-group">
         <label>Delivery address</label>
-        <input type="text" placeholder="Street / Subdivision / Area">
+        <input type="text" name="deliveryAddress" placeholder="Street / Subdivision / Area">
       </div>
       <div class="form-group">
         <label>Landmark</label>
-        <input type="text" placeholder="Nearby landmark">
+        <input type="text" name="landmark" placeholder="Nearby landmark">
       </div>
     </div>
 
@@ -342,18 +365,19 @@
       <div class="form-group">
         <label>Payment method</label>
         <div class="radio-group">
-          <label class="radio-label"><input type="radio" name="payment" value="GCash"> GCash</label>
-          <label class="radio-label"><input type="radio" name="payment" value="Cash" checked> Cash</label>
-          <label class="radio-label"><input type="radio" name="payment" value="To be confirmed"> To be confirmed</label>
+          <label class="radio-label"><input type="radio" name="paymentMethod" value="GCash"> GCash</label>
+          <label class="radio-label"><input type="radio" name="paymentMethod" value="Cash" checked> Cash</label>
+          <label class="radio-label"><input type="radio" name="paymentMethod" value="To be confirmed"> To be confirmed</label>
         </div>
       </div>
       <div class="form-group">
         <label>Additional notes (optional)</label>
-        <textarea rows="3" placeholder="Special requests or delivery instructions"></textarea>
+        <textarea name="additionalNotes" rows="3" placeholder="Special requests or delivery instructions"></textarea>
       </div>
     </div>
 
-    <button type="submit" class="submit-btn">Submit Order</button>
+    <button type="submit" id="submitBtn" class="submit-btn">Submit Order</button>
+    <div id="status-message"></div>
   </form>
 </div>
 
@@ -371,6 +395,7 @@
     if (quantities[item] + change >= 0) {
       quantities[item] += change;
       document.getElementById('qty-' + item).innerText = quantities[item];
+      document.getElementById('input-qty-' + item).value = quantities[item];
       calculateTotals();
     }
   }
@@ -388,15 +413,71 @@
     const discount = discountGroups * 10;
     const grandTotal = subtotal - discount;
 
-    document.getElementById('total-qty').innerText = totalQty + " pcs";
-    document.getElementById('subtotal').innerText = "₱" + subtotal.toFixed(2);
-    document.getElementById('discount').innerText = "-₱" + discount.toFixed(2);
-    document.getElementById('total').innerText = "₱" + grandTotal.toFixed(2);
+    const totalQtyStr = totalQty + " pcs";
+    const subtotalStr = "₱" + subtotal.toFixed(2);
+    const discountStr = "-₱" + discount.toFixed(2);
+    const grandTotalStr = "₱" + grandTotal.toFixed(2);
+
+    document.getElementById('total-qty').innerText = totalQtyStr;
+    document.getElementById('input-total-qty').value = totalQtyStr;
+
+    document.getElementById('subtotal').innerText = subtotalStr;
+    document.getElementById('input-subtotal').value = subtotalStr;
+
+    document.getElementById('discount').innerText = discountStr;
+    document.getElementById('input-discount').value = discountStr;
+
+    document.getElementById('total').innerText = grandTotalStr;
+    document.getElementById('input-total').value = grandTotalStr;
   }
 
-  document.getElementById('orderForm').addEventListener('submit', function(e) {
+  // Handle Formspree AJAX Submission
+  const form = document.getElementById('orderForm');
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
-    alert("Thank you for your order! Your request has been submitted.");
+    const status = document.getElementById('status-message');
+    const btn = document.getElementById('submitBtn');
+    
+    btn.disabled = true;
+    btn.innerText = "Submitting...";
+
+    const data = new FormData(form);
+    try {
+      const response = await fetch(e.target.action, {
+        method: form.method,
+        body: data,
+        headers: { 'Accept': 'json' }
+      });
+      
+      if (response.ok) {
+        status.style.color = "#4ade80";
+        status.innerHTML = "🎉 Thank you! Your order has been submitted successfully.";
+        form.reset();
+        // Reset counters display
+        for (const item in quantities) {
+          quantities[item] = 0;
+          document.getElementById('qty-' + item).innerText = 0;
+          document.getElementById('input-qty-' + item).value = 0;
+        }
+        calculateTotals();
+        btn.innerText = "Submit Order";
+      } else {
+        const errorData = await response.json();
+        status.style.color = "#f87171";
+        if (errorData.hasOwnProperty('errors')) {
+          status.innerHTML = errorData.errors.map(error => error.message).join(", ");
+        } else {
+          status.innerHTML = "Oops! There was a problem submitting your form.";
+        }
+        btn.disabled = false;
+        btn.innerText = "Submit Order";
+      }
+    } catch (error) {
+      status.style.color = "#f87171";
+      status.innerHTML = "Oops! There was a connection error.";
+      btn.disabled = false;
+      btn.innerText = "Submit Order";
+    }
   });
 </script>
 

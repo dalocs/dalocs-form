@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DALOCS Made-to-Order Cookie Form</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --accent-blue: #2563eb;
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-white);
+      margin: 0;
+      padding: 16px;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 480px;
+    }
+    .header {
+      background-color: var(--accent-blue);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .header h1 { margin: 0; font-size: 24px; letter-spacing: 2px; }
+    .header p { margin: 4px 0 0 0; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+    .header .subtitle { margin-top: 10px; font-size: 14px; opacity: 0.9; }
+    
+    .promo-box {
+      background: #1e3a8a;
+      border: 1px solid #3b82f6;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+    }
+    .promo-box h3 { margin: 0 0 6px 0; font-size: 15px; color: #60a5fa; }
+    .promo-box p { margin: 0; font-size: 13px; color: #dbeafe; }
+
+    .section {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background-color: #0f172a;
+      color: var(--text-white);
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    .category-tag {
+      background-color: #334155;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      display: inline-block;
+      margin: 12px 0 8px 0;
+    }
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px dashed #334155;
+    }
+    .item-info { flex-grow: 1; }
+    .item-name { font-size: 14px; font-weight: bold; }
+    .item-subtext { font-size: 12px; color: var(--text-muted); }
+    .counter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-counter {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background-color: #334155;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .qty-display { min-width: 16px; text-align: center; }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    .discount-row { color: #4ade80; }
+    .total-row {
+      font-size: 18px;
+      font-weight: bold;
+      color: #38bdf8;
+      border-top: 1px solid var(--border-color);
+      padding-top: 8px;
+      margin-top: 8px;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button.submit-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      background-color: var(--accent-blue);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>DALOCS</h1>
+    <p>One Bite. Pure Delight.</p>
+    <div class="subtitle">MADE-TO-ORDER<br><small>Freshly baked, just for you! 🍪</small></div>
+  </div>
+
+  <div class="promo-box">
+    <h3>🏷️ Mix & Match Promo</h3>
+    <p><strong>Every 4 cookies = ₱10 OFF</strong><br>
+    4 pcs: ₱10 off | 8 pcs: ₱20 off | 12 pcs: ₱30 off</p>
+  </div>
+
+  <form id="orderForm">
+    <!-- 01 Customer Details -->
+    <div class="section">
+      <div class="section-title">01 · Customer Details</div>
+      <div class="form-group">
+        <label>Full name *</label>
+        <input type="text" id="fullName" required placeholder="Enter full name">
+      </div>
+      <div class="form-group">
+        <label>Contact number *</label>
+        <input type="text" id="contact" required placeholder="Enter phone number">
+      </div>
+      <div class="form-group">
+        <label>Instagram username (optional)</label>
+        <input type="text" id="ig" placeholder="e.g. username.est">
+      </div>
+    </div>
+
+    <!-- 02 Choose Cookies -->
+    <div class="section">
+      <div class="section-title">02 · Choose Your Cookies</div>
+
+      <div class="category-tag">Signature Cookies</div>
+      <div class="item-row">
+        <div class="item-info">
+          <div class="item-name">OG Classic</div>
+          <div class="item-subtext">Choco Chip • ₱50</div>
+        </div>
+        <div class="counter">
+          <button type="button" class="btn-counter" onclick="updateQty('og', -1)">-</button>
+          <span id="qty-og" class="qty-display">0</span>
+          <button type="button" class="btn-counter" onclick="updateQty('og', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="item-row">
+        <div class="item-info">
+          <div class="item-name">Dark Knight</div>
+          <div class="item-subtext">Dark Choco • ₱55</div>
+        </div>
+        <div class="counter">
+          <button type="button" class="btn-counter" onclick="updateQty('dark', -1)">-</button>
+          <span id="qty-dark" class="qty-display">0</span>
+          <button type="button" class="btn-counter" onclick="updateQty('dark', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="item-row">
+        <div class="item-info">
+          <div class="item-name">Double Trouble</div>
+          <div class="item-subtext">Double Dark Choco • ₱65</div>
+        </div>
+        <div class="counter">
+          <button type="button" class="btn-counter" onclick="updateQty('double', -1)">-</button>
+          <span id="qty-double" class="qty-display">0</span>
+          <button type="button" class="btn-counter" onclick="updateQty('double', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="category-tag">Unique Cravings</div>
+      <div class="item-row">
+        <div class="item-info">
+          <div class="item-name">Red V</div>
+          <div class="item-subtext">Red Velvet • ₱55</div>
+        </div>
+        <div class="counter">
+          <button type="button" class="btn-counter" onclick="updateQty('redv', -1)">-</button>
+          <span id="qty-redv" class="qty-display">0</span>
+          <button type="button" class="btn-counter" onclick="updateQty('redv', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="item-row">
+        <div class="item-info">
+          <div class="item-name">Matcha Gotcha</div>
+          <div class="item-subtext">Matcha • ₱60</div>
+        </div>
+        <div class="counter">
+          <button type="button" class="btn-counter" onclick="updateQty('matcha', -1)">-</button>
+          <span id="qty-matcha" class="qty-display">0</span>
+          <button type="button" class="btn-counter" onclick="updateQty('matcha', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="category-tag">Indulgent Treats</div>
+      <div class="item-row">
+        <div class="item-info">
+          <div class="item-name">Oatmeal</div>
+          <div class="item-subtext">Oatmeal Choco Chip • ₱60</div>
+        </div>
+        <div class="counter">
+          <button type="button" class="btn-counter" onclick="updateQty('oatmeal', -1)">-</button>
+          <span id="qty-oatmeal" class="qty-display">0</span>
+          <button type="button" class="btn-counter" onclick="updateQty('oatmeal', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="item-row">
+        <div class="item-info">
+          <div class="item-name">Hershey</div>
+          <div class="item-subtext">Hershey Choco • ₱65</div>
+        </div>
+        <div class="counter">
+          <button type="button" class="btn-counter" onclick="updateQty('hershey', -1)">-</button>
+          <span id="qty-hershey" class="qty-display">0</span>
+          <button type="button" class="btn-counter" onclick="updateQty('hershey', 1)">+</button>
+        </div>
+      </div>
+
+      <div class="item-row">
+        <div class="item-info">
+          <div class="item-name">Biscoff</div>
+          <div class="item-subtext">Biscoff • ₱65</div>
+        </div>
+        <div class="counter">
+          <button type="button" class="btn-counter" onclick="updateQty('biscoff', -1)">-</button>
+          <span id="qty-biscoff" class="qty-display">0</span>
+          <button type="button" class="btn-counter" onclick="updateQty('biscoff', 1)">+</button>
+        </div>
+      </div>
+
+      <!-- Live Order Calculations -->
+      <div style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 12px;">
+        <div class="summary-row"><span>Total quantity</span><span id="total-qty">0 pcs</span></div>
+        <div class="summary-row"><span>Subtotal</span><span id="subtotal">₱0.00</span></div>
+        <div class="summary-row discount-row"><span>Discount</span><span id="discount">-₱0.00</span></div>
+        <div class="summary-row total-row"><span>Total</span><span id="total">₱0.00</span></div>
+      </div>
+    </div>
+
+    <!-- 03 Preferred Schedule -->
+    <div class="section">
+      <div class="section-title">03 · Preferred Schedule</div>
+      <div class="form-group">
+        <label>Preferred pick-up / delivery date</label>
+        <input type="date" required>
+      </div>
+      <div class="form-group">
+        <label>Preferred time</label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="time" value="Morning"> Morning</label>
+          <label class="radio-label"><input type="radio" name="time" value="Afternoon" checked> Afternoon</label>
+          <label class="radio-label"><input type="radio" name="time" value="Evening"> Evening</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Fulfillment method</label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="method" value="Pick-up"> Pick-up — Every Tuesday, Jaro, Iloilo</label>
+          <label class="radio-label"><input type="radio" name="method" value="Delivery" checked> Delivery — via Maxim, fee c/o buyer</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Delivery address</label>
+        <input type="text" placeholder="Street / Subdivision / Area">
+      </div>
+      <div class="form-group">
+        <label>Landmark</label>
+        <input type="text" placeholder="Nearby landmark">
+      </div>
+    </div>
+
+    <!-- 04 Payment & Notes -->
+    <div class="section">
+      <div class="section-title">04 · Payment & Notes</div>
+      <div class="form-group">
+        <label>Payment method</label>
+        <div class="radio-group">
+          <label class="radio-label"><input type="radio" name="payment" value="GCash"> GCash</label>
+          <label class="radio-label"><input type="radio" name="payment" value="Cash" checked> Cash</label>
+          <label class="radio-label"><input type="radio" name="payment" value="To be confirmed"> To be confirmed</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Additional notes (optional)</label>
+        <textarea rows="3" placeholder="Special requests or delivery instructions"></textarea>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn">Submit Order</button>
+  </form>
+</div>
+
+<script>
+  const prices = {
+    og: 50, dark: 55, double: 65, redv: 55,
+    matcha: 60, oatmeal: 60, hershey: 65, biscoff: 65
+  };
+  const quantities = {
+    og: 0, dark: 0, double: 0, redv: 0,
+    matcha: 0, oatmeal: 0, hershey: 0, biscoff: 0
+  };
+
+  function updateQty(item, change) {
+    if (quantities[item] + change >= 0) {
+      quantities[item] += change;
+      document.getElementById('qty-' + item).innerText = quantities[item];
+      calculateTotals();
+    }
+  }
+
+  function calculateTotals() {
+    let totalQty = 0;
+    let subtotal = 0;
+
+    for (const item in quantities) {
+      totalQty += quantities[item];
+      subtotal += quantities[item] * prices[item];
+    }
+
+    const discountGroups = Math.floor(totalQty / 4);
+    const discount = discountGroups * 10;
+    const grandTotal = subtotal - discount;
+
+    document.getElementById('total-qty').innerText = totalQty + " pcs";
+    document.getElementById('subtotal').innerText = "₱" + subtotal.toFixed(2);
+    document.getElementById('discount').innerText = "-₱" + discount.toFixed(2);
+    document.getElementById('total').innerText = "₱" + grandTotal.toFixed(2);
+  }
+
+  document.getElementById('orderForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert("Thank you for your order! Your request has been submitted.");
+  });
+</script>
+
+</body>
+</html>
